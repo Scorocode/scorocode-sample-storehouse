@@ -11,7 +11,7 @@
     tools:context="prof_itgroup.ru.storehouseapp.LoginActivity">
 
     <LinearLayout
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:gravity="center"
@@ -23,7 +23,7 @@
             style="@style/label_style" />
 
         <EditText
-            android:id="@+id/etLogin"
+            android:id="@+id/etEmail"
             android:hint="@string/login_hint"
             style="@style/login_and_password_input_style" />
 
@@ -39,6 +39,14 @@
             android:maxLines="1"
             style="@style/login_and_password_input_style" />
 
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_marginTop="16dp"
+            android:text="@string/login_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
+
 
 </RelativeLayout>

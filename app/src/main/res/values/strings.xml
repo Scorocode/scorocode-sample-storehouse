@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">StorehouseApp</string>
-    <string name="login">Логин:</string>
-    <string name="login_hint">Введите логин</string>
+    <string name="login">Email:</string>
+    <string name="login_hint">Введите email</string>
     <string name="password">Пароль:</string>
     <string name="password_hint">Введите пароль</string>
+    <string name="login_button_text">Войти</string>
+    <string name="error_login">Ошибка при попытке логина. Проверьте вводимые данные и попробуйте снова</string>
 </resources>
