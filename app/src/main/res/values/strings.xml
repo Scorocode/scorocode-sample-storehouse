@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">StorehouseApp</string>
+    <string name="login">Логин:</string>
+    <string name="login_hint">Введите логин</string>
+    <string name="password">Пароль:</string>
+    <string name="password_hint">Введите пароль</string>
+</resources>
