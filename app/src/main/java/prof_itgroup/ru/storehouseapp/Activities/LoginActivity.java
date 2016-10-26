@@ -12,7 +12,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import prof_itgroup.ru.storehouseapp.Objects.LocalPersistence;
 import prof_itgroup.ru.storehouseapp.R;
-import prof_itgroup.ru.storehouseapp.RegisterActivity;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackLoginUser;
 import ru.profit_group.scorocode_sdk.Responses.user.ResponseLogin;
 import ru.profit_group.scorocode_sdk.ScorocodeSdk;
@@ -65,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     public static boolean isUserLogined(Context context) {
         Object isUserLogined = LocalPersistence.readObjectFromFile(context, LocalPersistence.FILE_USER_INFO);
 
-        if(isUserLogined != null) {
+        if(isUserLogined != null && ScorocodeSdk.getSessionId() != null) {
             return true;
         } else {
             return false;
