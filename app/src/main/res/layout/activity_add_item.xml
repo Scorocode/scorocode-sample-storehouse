@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="prof_itgroup.ru.storehouseapp.Activities.AddItemActivity">
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="@string/add_item_device_name"
+        style="@style/label_style" />
+
+    <EditText
+        android:id="@+id/etDeviceName"
+        android:hint="@string/add_item_hint_device_name"
+        style="@style/textStyle"/>
+
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="@string/add_item_device_platform"
+        style="@style/label_style" />
+
+    <EditText
+        android:id="@+id/etDevicePlatform"
+        android:hint="@string/add_item_hint_device_platform"
+        style="@style/textStyle"/>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="@string/add_item_camera_info"
+        style="@style/label_style" />
+
+    <EditText
+        android:id="@+id/etDeviceCameraInfo"
+        android:hint="@string/add_item_hint_camera_info"
+        style="@style/textStyle"/>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="@string/add_item_available_colors_info"
+        style="@style/label_style" />
+
+    <EditText
+        android:id="@+id/etDeviceColors"
+        android:hint="@string/add_item_hint_available_colors_info"
+        style="@style/textStyle"/>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="@string/add_item_available_amount_info"
+        style="@style/label_style" />
+
+    <EditText
+        android:id="@+id/etDevicesAvailable"
+        android:hint="@string/add_item_hint_available_amount_info"
+        style="@style/textStyle"/>
+
+    <Button
+        android:id="@+id/btnAddItem"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
