@@ -42,4 +42,6 @@
     <string name="error_add_item">Ошибка при добавлении нового устройства в базу данных</string>
     <string name="succed_add_item">Устройство успешно добавлено в базу данных</string>
     <string name="change_item_text">Изменить запись</string>
+    <string name="action_edit_item">Редактировать запись</string>
+    <string name="error_update_item">Во время обновления информации об устройстве произошла ошибка</string>
 </resources>

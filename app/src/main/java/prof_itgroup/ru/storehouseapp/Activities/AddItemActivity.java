@@ -61,7 +61,7 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private List<String> getColorsList(String deviceColors) {
+    public static List<String> getColorsList(String deviceColors) {
         List<String> colors = new ArrayList<>();
 
         for(String color: deviceColors.split(",")) {
@@ -72,8 +72,13 @@ public class AddItemActivity extends AppCompatActivity {
         return colors;
     }
 
-    private String getStringFrom(EditText editText) {
-        return editText.getText().toString();
+    @NonNull
+    public static String getStringFrom(EditText editText) {
+        if(editText != null) {
+            return editText.getText().toString();
+        } else {
+            return "";
+        }
     }
 
     public static void display(Context context) {
