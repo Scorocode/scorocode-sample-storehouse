@@ -8,10 +8,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="prof_itgroup.ru.storehouseapp.LoginActivity">
+    tools:context="prof_itgroup.ru.storehouseapp.Activities.LoginActivity">
 
     <LinearLayout
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:gravity="center"
@@ -25,7 +25,7 @@
         <EditText
             android:id="@+id/etEmail"
             android:hint="@string/login_hint"
-            style="@style/login_and_password_input_style" />
+            style="@style/textStyle" />
 
         <TextView
             android:layout_marginTop="16dp"
@@ -37,14 +37,32 @@
             android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:maxLines="1"
-            style="@style/login_and_password_input_style" />
+            style="@style/textStyle" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_marginTop="16dp"
-            android:text="@string/login_button_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_marginTop="16dp"
+                android:text="@string/register_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_marginLeft="16dp"
+                android:id="@+id/btnLogin"
+                android:layout_marginTop="16dp"
+                android:text="@string/login_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

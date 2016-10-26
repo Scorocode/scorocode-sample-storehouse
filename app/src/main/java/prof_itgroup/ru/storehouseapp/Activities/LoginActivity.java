@@ -1,4 +1,4 @@
-package prof_itgroup.ru.storehouseapp;
+package prof_itgroup.ru.storehouseapp.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +10,19 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import prof_itgroup.ru.storehouseapp.Objects.LocalPersistence;
+import prof_itgroup.ru.storehouseapp.R;
+import prof_itgroup.ru.storehouseapp.RegisterActivity;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackLoginUser;
 import ru.profit_group.scorocode_sdk.Responses.user.ResponseLogin;
-import ru.profit_group.scorocode_sdk.Responses.user.UserData;
 import ru.profit_group.scorocode_sdk.ScorocodeSdk;
+import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
 import ru.profit_group.scorocode_sdk.scorocode_objects.User;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String SHARED_PREF_IS_USER_LOGINED = "prof_itgroup.ru.storehouseapp.isuserlogined";
+    public static final String APPLICATION_ID = "305ffd6cc32832f6819bf4e4f4707848";
+    public static final String CLIENT_KEY = "962066371eefc0d1850a76c7ab14c1dc";
+
     @BindView(R.id.etEmail) EditText etEmail;
     @BindView(R.id.etPassword) EditText etPassword;
 
@@ -26,7 +31,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ScorocodeSdk.initWith("305ffd6cc32832f6819bf4e4f4707848", "962066371eefc0d1850a76c7ab14c1dc");
+        if (isUserLogined(this)) {
+            MainActivity.display(this);
+        }
+
+        ScorocodeSdk.initWith(APPLICATION_ID, CLIENT_KEY);
         ButterKnife.bind(this);
     }
 
@@ -37,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onLoginSucceed(ResponseLogin responseLogin) {
                 MainActivity.display(LoginActivity.this);
-                UserData userData = responseLogin.getResult().getUser();
+                DocumentInfo userData = responseLogin.getResult().getUserInfo();
+                LocalPersistence.writeObjectToFile(LoginActivity.this, userData, LocalPersistence.FILE_USER_INFO);
             }
 
             @Override
@@ -45,6 +55,21 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, getResources().getString(R.string.error_login), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @OnClick(R.id.btnRegister)
+    public void onBtnRegisterClicked() {
+        RegisterActivity.display(this);
+    }
+
+    public static boolean isUserLogined(Context context) {
+        Object isUserLogined = LocalPersistence.readObjectFromFile(context, LocalPersistence.FILE_USER_INFO);
+
+        if(isUserLogined != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static void display(Context context) {
