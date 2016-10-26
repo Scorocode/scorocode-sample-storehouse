@@ -1,4 +1,4 @@
-package prof_itgroup.ru.storehouseapp;
+package prof_itgroup.ru.storehouseapp.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import prof_itgroup.ru.storehouseapp.Activities.LoginActivity;
+import prof_itgroup.ru.storehouseapp.R;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackRegisterUser;
 import ru.profit_group.scorocode_sdk.scorocode_objects.User;
 
