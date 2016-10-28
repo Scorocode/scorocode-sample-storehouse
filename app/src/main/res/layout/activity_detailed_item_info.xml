@@ -8,6 +8,50 @@
     android:orientation="vertical"
     tools:context="prof_itgroup.ru.storehouseapp.Activities.DetailedItemInfoActivity">
 
-    <include layout="@layout/activity_add_item"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/item_core"/>
+
+            <LinearLayout
+                android:id="@+id/llWaitingUsers"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/label_style"
+                    android:text="@string/action_waiting_list"/>
+
+                <TextView
+                    android:id="@+id/tvWaitingUsers"
+                    style="@style/label_style"/>
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    style="@style/label_style"
+                    android:text="@string/last_change"/>
+
+                <TextView
+                    android:id="@+id/tvLastChange"
+                    style="@style/label_style"/>
+
+                <Button
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/btnSendToUser"
+                    android:text="@string/sendToUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

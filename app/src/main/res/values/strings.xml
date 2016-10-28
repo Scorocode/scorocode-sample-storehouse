@@ -6,7 +6,7 @@
     <string name="password_hint">Введите пароль</string>
     <string name="login_button_text">Войти</string>
     <string name="error_login">Ошибка при попытке логина. Проверьте вводимые данные и попробуйте снова</string>
-    <string name="storedItemName">Название телефона:</string>
+    <string name="storedItemName">Название:</string>
     <string name="storedItemStatus">ОС:</string>
     <string name="error_get_docs">Не удалось получить документы с сервера.</string>
     <string name="fieldDeviceName">deviceName</string>
@@ -65,4 +65,13 @@
     <string name="error">Во время выполнения действия произошла ошибка</string>
     <string name="item_ready_to_sell">Устройство добавлено в лист отгрузки</string>
     <string name="error_delete_and_add">Нельзя одновременно удалять и добавлять цвета устройства. Сохраните текущие ихменения сначала или нажмите кнопку сброс.</string>
+    <string name="items_to_send">Пользователи ожидащие отправки:</string>
+    <string name="action_filter_item">Фильтр</string>
+    <string name="action_waiting_list">Ожидают отправки:</string>
+    <string name="button_text_send">Отгрузить</string>
+    <string name="sendToUser">Отгрузить пользователю</string>
+    <string name="fieldLastSend">lastSend</string>
+    <string name="lastChange">Последнее изменение:\n</string>
+    <string name="last_change">Последняя отгрузка в:</string>
+    <string name="storedItemPrice">Цена:</string>
 </resources>

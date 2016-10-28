@@ -7,4 +7,10 @@
         android:title="@string/action_add_item"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/action_set_filter"
+        android:icon="@android:drawable/ic_input_get"
+        android:title="@string/action_filter_item"
+        app:showAsAction="ifRoom"/>
+    
 </menu>

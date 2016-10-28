@@ -1,0 +1,135 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        style="@style/label_style"
+        android:text="@string/add_item_device_name" />
+
+    <EditText
+        android:id="@+id/etDeviceName"
+        style="@style/textStyle"
+        android:hint="@string/add_item_hint_device_name" />
+
+    <TextView
+        style="@style/label_style"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_item_device_platform" />
+
+    <EditText
+        android:id="@+id/etDevicePlatform"
+        style="@style/textStyle"
+        android:hint="@string/add_item_hint_device_platform" />
+
+    <TextView
+        style="@style/label_style"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_item_camera_info" />
+
+    <EditText
+        android:id="@+id/etDeviceCameraInfo"
+        style="@style/textStyle"
+        android:hint="@string/add_item_hint_camera_info" />
+
+    <TextView
+        style="@style/label_style"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_item_available_colors_info" />
+
+    <EditText
+        android:id="@+id/etDeviceColors"
+        style="@style/textStyle"
+        android:hint="@string/add_item_hint_available_colors_info" />
+
+    <LinearLayout
+        android:id="@+id/llChangeColorList"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnAddColor"
+            android:padding="4dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/add_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnRemoveColor"
+            android:padding="4dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/remove_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/label_style"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_item_price" />
+
+    <EditText
+        android:id="@+id/etDevicePrice"
+        style="@style/textStyle"
+        android:inputType="number"
+        android:hint="@string/add_item_hint_available_amount_info" />
+
+    <LinearLayout
+        android:id="@+id/llChangePrice"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnIncreaseCount"
+            android:padding="4dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/increase_item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnDecreaseCount"
+            android:padding="4dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/decrease_item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="@string/button_clear" />
+
+        <Button
+            android:id="@+id/btnAddItem"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="@string/add" />
+
+    </LinearLayout>
+
+</LinearLayout>

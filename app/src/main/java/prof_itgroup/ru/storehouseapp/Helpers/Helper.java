@@ -9,7 +9,9 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
 
+import prof_itgroup.ru.storehouseapp.Objects.DocumentFields;
 import prof_itgroup.ru.storehouseapp.R;
+import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
 
 
 /**
@@ -57,6 +59,20 @@ public class Helper {
                 })
                 .setNegativeButton(R.string.close, null)
                 .show();
+    }
+
+    public static String getFieldValue(Context context, DocumentInfo documentInfo, DocumentFields field) {
+        return String.valueOf(documentInfo.getFields().get(field.getFieldName(context)));
+    }
+
+    public static String getArrayAsStringFrom(Context context, DocumentInfo documentInfo, DocumentFields documentFields) {
+        if(getFieldValue(context, documentInfo, documentFields) == null || getFieldValue(context, documentInfo, documentFields).equals("null")) {
+            return "";
+        }
+
+        return getFieldValue(context, documentInfo, documentFields)
+                .replace("[","")
+                .replace("]","");
     }
 
     public interface CallbackEditTextDialog{

@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_add_item:
                 AddItemActivity.display(this);
                 break;
+
+
         }
         return super.onOptionsItemSelected(item);
     }

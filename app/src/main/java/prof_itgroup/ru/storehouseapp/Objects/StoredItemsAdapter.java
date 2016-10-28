@@ -68,9 +68,11 @@ public class StoredItemsAdapter extends BaseAdapter {
     private void customizeView(View view, ViewHolder holder, final DocumentInfo documentInfo) {
         String deviceName = (String) documentInfo.getFields().get(DocumentFields.DEVICE_NAME.getFieldName(context));
         String devicePlatform = (String) documentInfo.getFields().get(DocumentFields.PLATFORM.getFieldName(context));
+        Double devicePrice = (Double) documentInfo.getFields().get(DocumentFields.DEVICE_PRICE.getFieldName(context));
 
         holder.tvStoredItemName.setText(deviceName);
         holder.tvStoredItemStatus.setText(devicePlatform);
+        holder.tvStoredItemPrice.setText(String.valueOf(devicePrice));
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +85,7 @@ public class StoredItemsAdapter extends BaseAdapter {
     static class ViewHolder {
         @BindView(R.id.tvStoredItemName) TextView tvStoredItemName;
         @BindView(R.id.tvStoredItemPlatform) TextView tvStoredItemStatus;
+        @BindView(R.id.tvStoredItemPrice) TextView tvStoredItemPrice;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -12,10 +12,10 @@ public enum DocumentFields {
 
     DEVICE_NAME(R.string.fieldDeviceName),
     PLATFORM(R.string.fieldPlatformName),
-    MEMORY_INFO(R.string.fieldMemoryInfo),
     CAMERA_INFO(R.string.fieldCameraInfo),
     COLORS_AVAILABLE(R.string.fieldColorsAvailable),
     DEVICE_PRICE(R.string.fieldDevicePrice),
+    LAST_SEND(R.string.fieldLastSend),
     BUYERS(R.string.fieldBuyers);
 
     private int fieldNameId;
