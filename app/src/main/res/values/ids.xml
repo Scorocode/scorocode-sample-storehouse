@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="title_enter_user_login" type="id">Введите логин пользователя</item>
+</resources>

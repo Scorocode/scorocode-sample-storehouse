@@ -7,4 +7,16 @@
         android:title="@string/action_edit_item"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/action_remove_item"
+        android:icon="@android:drawable/ic_delete"
+        android:title="@string/action_remove_item"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_prepare_item"
+        android:icon="@android:drawable/ic_menu_send"
+        android:title="@string/action_prepare_item"
+        app:showAsAction="ifRoom"/>
+
 </menu>

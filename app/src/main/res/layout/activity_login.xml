@@ -11,54 +11,56 @@
     tools:context="prof_itgroup.ru.storehouseapp.Activities.LoginActivity">
 
     <LinearLayout
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <TextView
+            style="@style/label_style"
             android:layout_marginTop="16dp"
-            android:text="@string/login"
-            style="@style/label_style" />
+            android:text="@string/login" />
 
         <EditText
+            android:text="ps@gmail.com"
             android:id="@+id/etEmail"
-            android:hint="@string/login_hint"
-            style="@style/textStyle" />
+            android:gravity="center"
+            style="@style/textStyle"
+            android:hint="@string/login_hint" />
 
         <TextView
-            android:layout_marginTop="16dp"
             style="@style/label_style"
+            android:layout_marginTop="16dp"
             android:text="@string/password"/>
 
         <EditText
+            android:text="qwerty"
+            android:gravity="center"
             android:id="@+id/etPassword"
+            style="@style/textStyle"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
-            android:maxLines="1"
-            style="@style/textStyle" />
+            android:maxLines="1" />
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/login_button_text" />
 
             <Button
                 android:id="@+id/btnRegister"
-                android:layout_marginTop="16dp"
-                android:text="@string/register_button_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:layout_marginLeft="16dp"
-                android:id="@+id/btnLogin"
-                android:layout_marginTop="16dp"
-                android:text="@string/login_button_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/register_button_text" />
 
         </LinearLayout>
 

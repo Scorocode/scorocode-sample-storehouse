@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, getResources().getString(R.string.error_register_wrong_data) , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.wrong_data) , Toast.LENGTH_SHORT).show();
         }
     }
 

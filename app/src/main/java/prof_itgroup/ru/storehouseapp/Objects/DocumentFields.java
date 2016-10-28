@@ -15,7 +15,8 @@ public enum DocumentFields {
     MEMORY_INFO(R.string.fieldMemoryInfo),
     CAMERA_INFO(R.string.fieldCameraInfo),
     COLORS_AVAILABLE(R.string.fieldColorsAvailable),
-    AMOUNT_AVAILABLE(R.string.fieldAmountAvailable);
+    DEVICE_PRICE(R.string.fieldDevicePrice),
+    BUYERS(R.string.fieldBuyers);
 
     private int fieldNameId;
 
