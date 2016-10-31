@@ -12,7 +12,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import prof_itgroup.ru.storehouseapp.Activities.DetailedItemInfoActivity;
+import prof_itgroup.ru.storehouseapp.Activities.ItemDetailsActivity;
 import prof_itgroup.ru.storehouseapp.R;
 import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
 
@@ -79,7 +79,7 @@ public class StoredItemsAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DetailedItemInfoActivity.display(context, documentInfo);
+                ItemDetailsActivity.display(context, documentInfo);
             }
         });
     }

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="title_enter_user_login" type="id">Введите логин пользователя</item>
+    <item name="balance_refreshed" type="id">Баланс компании успешно пересчитан</item>
+    <item name="can_refresh_balance" type="id">Не удалось пересчитать баланс компании. Обратитесь в
+        службу технической поддержки
+    </item>
 </resources>

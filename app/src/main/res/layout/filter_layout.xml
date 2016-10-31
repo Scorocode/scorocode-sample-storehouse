@@ -14,9 +14,14 @@
     <include layout="@layout/dilimeter" />
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/cbColorFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:text="@string/colorsFilter"
@@ -24,7 +29,8 @@
 
         <EditText
             android:id="@+id/etColors"
-            android:hint="Введите необходимые цвета через зяпятую"
+            android:layout_marginLeft="16dp"
+            android:hint="@string/color_filter_hint"
             style="@style/label_style" />
 
     </LinearLayout>

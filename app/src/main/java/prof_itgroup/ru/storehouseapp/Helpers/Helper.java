@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import prof_itgroup.ru.storehouseapp.R;
 
 
@@ -42,12 +45,13 @@ public class Helper {
 
     public static void showEditTextDialog(Context context, int titleId, int inputType, final CallbackEditTextDialog callbackEditTextDialog) {
 
-        final EditText editText = new EditText(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.edit_text_alert_view, null);
+        final EditText editText = ButterKnife.findById(view, R.id.etData);
         editText.setInputType(inputType);
 
         new AlertDialog.Builder(context)
                 .setTitle(titleId)
-                .setView(editText)
+                .setView(view)
                 .setPositiveButton(R.string.continue_action, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

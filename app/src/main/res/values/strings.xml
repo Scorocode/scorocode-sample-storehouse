@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StorehouseApp</string>
+    <string name="app_name">Склад</string>
     <string name="login">Email:</string>
     <string name="login_hint">Введите email</string>
     <string name="password">Пароль:</string>
@@ -63,16 +63,16 @@
     <string name="action_prepare_item">Подготовить к отгрузке</string>
     <string name="fieldBuyers">buyers</string>
     <string name="error">Во время выполнения действия произошла ошибка</string>
-    <string name="item_ready_to_sell">Устройство добавлено в лист отгрузки</string>
+    <string name="add_waiting_buyer">Добавлен покупатель,\nожидающий товар</string>
     <string name="error_delete_and_add">Нельзя одновременно удалять и добавлять цвета устройства. Сохраните текущие ихменения сначала или нажмите кнопку сброс.</string>
     <string name="items_to_send">Пользователи ожидащие отправки:</string>
     <string name="action_filter_item">Фильтр</string>
-    <string name="action_waiting_list">Ожидают отправки:</string>
+    <string name="action_waiting_list">Покупатели, ожидающие отправки:</string>
     <string name="button_text_send">Отгрузить</string>
     <string name="sendToUser">Отгрузить пользователю</string>
     <string name="fieldLastSend">lastSend</string>
     <string name="lastChange">Последнее изменение:\n</string>
-    <string name="last_change">Последняя отгрузка в:</string>
+    <string name="last_change">Последняя отгрузка совершена в:</string>
     <string name="storedItemPrice">Цена:</string>
     <string name="filter_price_from">Цена от</string>
     <string name="filter_price_up_to">до</string>
@@ -81,4 +81,20 @@
     <string name="include_lower">Включая\nнижнюю\nграницу</string>
     <string name="include_upper">Включая\nверхнюю\nграницу</string>
     <string name="colorsFilter">Цвета:</string>
+    <string name="action_logout_item">Сменить пользователя</string>
+    <string name="cant_send_push">Не удалось отправить push сообщение грузчику. Свяжитесь с технической поддержкой</string>
+    <string name="push_sended">Сообщение грузчику успешно отправлено</string>
+    <string name="cant_send_email">Не удалось отправить email в бухгалтерию. Свяжитесь с технической поддержкой</string>
+    <string name="email_was_sended">Email в бухгалтерию успешно отправлен</string>
+    <string name="sms_was_sended">Sms курьеру успешно отправлено</string>
+    <string name="cant_send_sms">Не удалось отправить sms сообщение курьеру. Свяжитесь с технической поддержкой</string>
+    <string name="open_send_list">Открыть лист отгрузки</string>
+    <string name="addUserInList">Добавить покупателя</string>
+    <string name="color_filter_hint">Введите необходимые\nцвета через зяпятую</string>
+    <string name="comment_for_loader">Комментарий для грузчика:</string>
+    <string name="fieldSendInfo">sendInfo</string>
+    <string name="item_info">Информация о товаре:</string>
+    <string name="editInfo">редактировать</string>
+    <string name="saveInfo">сохранить</string>
+    <string name="no_info">По товару в настоящее время нет информации (отредактиуйте и измените информацию)</string>
 </resources>

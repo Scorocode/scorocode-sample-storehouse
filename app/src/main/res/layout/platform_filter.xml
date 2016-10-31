@@ -21,7 +21,7 @@
         android:id="@+id/etPlatformFilter"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
-        android:minWidth="16dp"
+        android:minWidth="60dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

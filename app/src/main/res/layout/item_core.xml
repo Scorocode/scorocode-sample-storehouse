@@ -52,7 +52,7 @@
 
         <Button
             android:id="@+id/btnAddColor"
-            android:padding="4dp"
+            android:padding="12dp"
             android:layout_marginRight="8dp"
             android:text="@string/add_color"
             android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
 
         <Button
             android:id="@+id/btnRemoveColor"
-            android:padding="4dp"
+            android:padding="12dp"
             android:layout_marginLeft="8dp"
             android:text="@string/remove_color"
             android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
 
         <Button
             android:id="@+id/btnIncreaseCount"
-            android:padding="4dp"
+            android:padding="12dp"
             android:layout_marginRight="8dp"
             android:text="@string/increase_item_count"
             android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
 
         <Button
             android:id="@+id/btnDecreaseCount"
-            android:padding="4dp"
+            android:padding="12dp"
             android:layout_marginLeft="8dp"
             android:text="@string/decrease_item_count"
             android:layout_width="wrap_content"
@@ -107,28 +107,35 @@
 
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_marginRight="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:text="@string/button_clear" />
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/btnAddItem"
-            android:layout_marginLeft="16dp"
-            android:layout_width="wrap_content"
+            android:padding="12dp"
+            android:background="#64b5f6"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:text="@string/add" />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:padding="12dp"
+            android:background="#64b5f6"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="@string/button_clear"
+            android:layout_weight="0.22" />
 
     </LinearLayout>
 

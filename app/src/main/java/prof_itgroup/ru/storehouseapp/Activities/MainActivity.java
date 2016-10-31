@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         fields = new DocumentFields(this);
+        LoginActivity.redirectIfNotLogined(this);
     }
 
     @Override
@@ -81,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
                         setAdapter(documentInfo);
                     }
                 });
+                break;
+
+            case R.id.action_logout:
+                LoginActivity.logout(this);
                 break;
 
         }

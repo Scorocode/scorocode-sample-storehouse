@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -35,22 +34,18 @@ import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
 
 import static prof_itgroup.ru.storehouseapp.Helpers.Helper.getStringFrom;
 
-public class DetailedItemInfoActivity extends AppCompatActivity {
-    private static final String EXTRA_ITEM_ID = "prof_itgroup.ru.storehouseapp.extraItemInfo";
+public class ItemDetailsActivity extends AppCompatActivity {
+    public static final String EXTRA_DOCUMENT_INFO = "prof_itgroup.ru.storehouseapp.extraItemInfo";
 
     @BindView(R.id.etDeviceName) EditText etDeviceName;
     @BindView(R.id.etDevicePlatform) EditText etDevicePlatform;
     @BindView(R.id.etDeviceCameraInfo) EditText etDeviceCameraInfo;
     @BindView(R.id.etDeviceColors) EditText etDeviceColors;
     @BindView(R.id.etDevicePrice) EditText etDevicePrice;
-    @BindView(R.id.tvWaitingUsers) TextView tvWaitingUsers;
-    @BindView(R.id.tvLastChange) TextView tvLastChange;
-    @BindView(R.id.tvLastChangeLabel) TextView tvLastChangeLabel;
     @BindView(R.id.btnAddItem) Button btnChangeItem;
     @BindView(R.id.btnClear) Button btnClear;
     @BindView(R.id.llChangeColorList) LinearLayout llChangeColorList;
     @BindView(R.id.llChangePrice) LinearLayout llChangePrice;
-    @BindView(R.id.llWaitingUsers) LinearLayout llWaitingUsers;
     private double increaseCount;
     private Map<String, ColorState> deviceColors;
 
@@ -64,8 +59,14 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setEditMode(false);
 
+        LoginActivity.redirectIfNotLogined(this);
+
         setFields();
         setChangeButton();
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @OnClick(R.id.btnIncreaseCount)
@@ -141,7 +142,7 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
                     try {
                         increaseCount = Double.valueOf(editTextContent);
                         if(!isValueIncrease) {
-                            increaseCount *= -1; //if we decrease value we change sign.
+                            increaseCount *= -1; //if we decrease value we change sign (increase by negative).
                         }
                     } catch (ClassCastException e) {
                         e.printStackTrace();
@@ -153,42 +154,11 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
             });
     }
 
-    @OnClick(R.id.btnSendToUser)
-    public void onSendToUserButtonClicked() {
-        document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
-            @Override
-            public void onDocumentFound(final DocumentInfo documentInfo) {
-                document.updateDocument()
-                        .popFirst(fields.getBuyersField())
-                        .setCurrentDate(fields.getLastSendField());
-
-                document.saveDocument(new CallbackDocumentSaved() {
-                    @Override
-                    public void onDocumentSaved() {
-                        document.updateDocument().getUpdateInfo().clear();
-                        refreshWaitingList();
-                    }
-
-                    @Override
-                    public void onDocumentSaveFailed(String errorCode, String errorMessage) {
-                        showToast(R.string.error);
-                    }
-                });
-            }
-
-            @Override
-            public void onDocumentNotFound(String errorCode, String errorMessage) {
-                showToast(R.string.error);
-            }
-        });
-    }
-
     private void setFields() {
         fields = new DocumentFields(this, getDocumentInfo());
 
         document = new Document(MainActivity.COLLECTION_NAME);
         deviceColors = new HashMap<>();
-        llWaitingUsers.setVisibility(View.GONE);
 
         deviceColors.clear();
         for(String color : fields.getColorsAsList()) {
@@ -202,28 +172,6 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
         etDeviceColors.setText(fields.getColors());
         etDeviceColors.setEnabled(false);
         etDeviceColors.setFocusable(false);
-
-        refreshWaitingList();
-    }
-
-    private void refreshWaitingList() {
-        document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
-            @Override
-            public void onDocumentFound(DocumentInfo documentInfo) {
-                fields.setDocumentInfo(documentInfo);
-                tvWaitingUsers.setText(fields.getBuyers());
-                tvLastChange.setText(fields.getLastSendTime());
-
-                llWaitingUsers.setVisibility(fields.getBuyers().isEmpty() ? View.GONE : View.VISIBLE);
-                tvLastChangeLabel.setVisibility(fields.getLastSendTime().isEmpty() ? View.GONE : View.VISIBLE);
-                tvLastChange.setVisibility(fields.getLastSendTime().isEmpty() ? View.GONE : View.VISIBLE);
-            }
-
-            @Override
-            public void onDocumentNotFound(String errorCode, String errorMessage) {
-                tvWaitingUsers.setVisibility(View.GONE);
-            }
-        });
     }
 
     private void setEditMode(boolean isEditModeEnabled) {
@@ -319,6 +267,10 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+
             case R.id.action_edit_item:
                 setEditMode(true);
                 break;
@@ -328,59 +280,28 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_prepare_item:
-                Helper.showEditTextDialog(this, R.id.title_enter_user_login, InputType.TYPE_CLASS_TEXT, new Helper.CallbackEditTextDialog() {
-                    @Override
-                    public void onContinueClicked(final String buyerName) {
-                        addBuyerAndRefreshWaitingList(buyerName);
-                    }
-                });
+                SendItemActivity.display(this, getDocumentInfo());
                 break;
+
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void addBuyerAndRefreshWaitingList(final String buyerName) {
-        document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
-            @Override
-            public void onDocumentFound(DocumentInfo documentInfo) {
-                document.updateDocument().push(fields.getBuyersField(), buyerName);
-                document.saveDocument(new CallbackDocumentSaved() {
-                    @Override
-                    public void onDocumentSaved() {
-                        document.updateDocument().getUpdateInfo().clear();
-                        refreshWaitingList();
-                        showToast(R.string.item_ready_to_sell);
-                    }
-
-                    @Override
-                    public void onDocumentSaveFailed(String errorCode, String errorMessage) {
-                        showToast(R.string.error);
-                    }
-                });
-            }
-
-            @Override
-            public void onDocumentNotFound(String errorCode, String errorMessage) {
-                showToast(R.string.error);
-            }
-        });
-    }
-
     private void showToast(int textRes) {
-        Toast.makeText(DetailedItemInfoActivity.this, getString(textRes), Toast.LENGTH_SHORT).show();
+        Toast.makeText(ItemDetailsActivity.this, getString(textRes), Toast.LENGTH_SHORT).show();
     }
 
     private DocumentInfo getDocumentInfo() {
         if(getIntent() != null) {
-            return (DocumentInfo) getIntent().getSerializableExtra(EXTRA_ITEM_ID);
+            return (DocumentInfo) getIntent().getSerializableExtra(EXTRA_DOCUMENT_INFO);
         } else {
             return new DocumentInfo();
         }
     }
 
     public static void display(Context context, DocumentInfo documentInfo) {
-        Intent intent = new Intent(context, DetailedItemInfoActivity.class);
-        intent.putExtra(EXTRA_ITEM_ID, documentInfo);
+        Intent intent = new Intent(context, ItemDetailsActivity.class);
+        intent.putExtra(EXTRA_DOCUMENT_INFO, documentInfo);
         context.startActivity(intent);
     }
 

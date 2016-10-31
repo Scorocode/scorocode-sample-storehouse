@@ -41,7 +41,8 @@ public class DocumentFields {
         COLORS_AVAILABLE(R.string.fieldColorsAvailable),
         DEVICE_PRICE(R.string.fieldDevicePrice),
         LAST_SEND(R.string.fieldLastSend),
-        BUYERS(R.string.fieldBuyers);
+        BUYERS(R.string.fieldBuyers),
+        SEND_INFO(R.string.fieldSendInfo);
 
         private int fieldNameId;
 
@@ -80,6 +81,10 @@ public class DocumentFields {
 
     public String getBuyersField() {
         return context.getString(Fields.BUYERS.getNameId());
+    }
+
+    public String getSendInfoField() {
+        return context.getString(Fields.SEND_INFO.getNameId());
     }
 
     private String getFieldValue(DocumentInfo documentInfo, Fields field) {

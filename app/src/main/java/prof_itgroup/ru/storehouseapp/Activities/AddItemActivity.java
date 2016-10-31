@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,7 +18,6 @@ import butterknife.OnClick;
 import prof_itgroup.ru.storehouseapp.Objects.DocumentFields;
 import prof_itgroup.ru.storehouseapp.R;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackDocumentSaved;
-import ru.profit_group.scorocode_sdk.ScorocodeSdk;
 import ru.profit_group.scorocode_sdk.scorocode_objects.Document;
 
 import static prof_itgroup.ru.storehouseapp.Helpers.Helper.getColorsListFrom;
@@ -37,8 +37,8 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
         ButterKnife.bind(this);
+        LoginActivity.redirectIfNotLogined(this);
 
-        ScorocodeSdk.initWith(LoginActivity.APPLICATION_ID, LoginActivity.CLIENT_KEY);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         editTextViews = new ArrayList<>();
@@ -49,6 +49,10 @@ public class AddItemActivity extends AppCompatActivity {
         editTextViews.add(etDevicePrice);
 
         fields = new DocumentFields(this);
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @OnClick(R.id.btnAddItem)
@@ -77,6 +81,16 @@ public class AddItemActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, getString(R.string.wrong_data), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private boolean isAllFieldsFilled() {

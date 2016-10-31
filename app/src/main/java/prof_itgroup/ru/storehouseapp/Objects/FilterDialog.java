@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import prof_itgroup.ru.storehouseapp.Activities.MainActivity;
+import prof_itgroup.ru.storehouseapp.Helpers.Helper;
 import prof_itgroup.ru.storehouseapp.R;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackFindDocument;
 import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
@@ -33,7 +35,9 @@ public class FilterDialog {
         final View v = LayoutInflater.from(context).inflate(R.layout.filter_layout, null);
         final CheckBox cbPriceFilter = ButterKnife.findById(v, R.id.cbPriceFilter);
         final CheckBox cbPlatformFilter = ButterKnife.findById(v, R.id.cbPlatformFilter);
+        final CheckBox cbColourFilter = ButterKnife.findById(v, R.id.cbColorFilter);
         final EditText etPlatformFilter = ButterKnife.findById(v, R.id.etPlatformFilter);
+        final EditText etColors = ButterKnife.findById(v, R.id.etColors);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle(R.string.titleChooseFilterProperties)
@@ -50,6 +54,14 @@ public class FilterDialog {
                             query.equalTo(new DocumentFields(context).getPlatformField(), etPlatformFilter.getText().toString());
                         }
 
+                        if(cbColourFilter.isChecked()) {
+                            List<Object> colors = new ArrayList<>();
+
+                            colors.addAll(Arrays.asList(Helper.getStringFrom(etColors).split(",")));
+
+                            query.containedIn(new DocumentFields(context).getColorsAvailableField(), colors);
+                        }
+
                         query.findDocuments(new CallbackFindDocument() {
                             @Override
                             public void onDocumentFound(List<DocumentInfo> documentInfos) {
@@ -58,7 +70,7 @@ public class FilterDialog {
 
                             @Override
                             public void onDocumentNotFound(String errorCode, String errorMessage) {
-                                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+                                Helper.showToast(context, R.string.error);
                             }
                         });
                     }

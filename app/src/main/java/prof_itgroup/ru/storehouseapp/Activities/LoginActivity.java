@@ -10,9 +10,11 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import prof_itgroup.ru.storehouseapp.Helpers.Helper;
 import prof_itgroup.ru.storehouseapp.Objects.LocalPersistence;
 import prof_itgroup.ru.storehouseapp.R;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackLoginUser;
+import ru.profit_group.scorocode_sdk.Callbacks.CallbackLogoutUser;
 import ru.profit_group.scorocode_sdk.Responses.user.ResponseLogin;
 import ru.profit_group.scorocode_sdk.ScorocodeSdk;
 import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
@@ -21,6 +23,10 @@ import ru.profit_group.scorocode_sdk.scorocode_objects.User;
 public class LoginActivity extends AppCompatActivity {
     public static final String APPLICATION_ID = "305ffd6cc32832f6819bf4e4f4707848";
     public static final String CLIENT_KEY = "962066371eefc0d1850a76c7ab14c1dc";
+    public static final String FILE_KEY = "fc76ecfd482abf3f7aec8e0585f74134";
+    private static final String MASTER_KEY = "383499df2748bb4560745d5da67f5e41";
+    private static final String MESSAGE_KEY = "694bcf2ffd29369dab1c3d0e3f1776ae";
+    private static final String SCRIPT_KEY = "cae4935f64336edab96cd90e31443253";
 
     @BindView(R.id.etEmail) EditText etEmail;
     @BindView(R.id.etPassword) EditText etPassword;
@@ -34,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             MainActivity.display(this);
         }
 
-        ScorocodeSdk.initWith(APPLICATION_ID, CLIENT_KEY);
+        ScorocodeSdk.initWith(APPLICATION_ID, CLIENT_KEY, null, FILE_KEY, MESSAGE_KEY, SCRIPT_KEY, null);
         ButterKnife.bind(this);
     }
 
@@ -71,7 +77,30 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public static void redirectIfNotLogined(Context context) {
+        if(!isUserLogined(context)) {
+            display(context);
+        }
+    }
+
+    public static void logout(final Context context) {
+        LocalPersistence.writeObjectToFile(context, null, LocalPersistence.FILE_USER_INFO);
+        new User().logout(new CallbackLogoutUser() {
+            @Override
+            public void onLogoutSucceed() {
+                display(context);
+            }
+
+            @Override
+            public void onLogoutFailed(String errorCode, String errorMessage) {
+                Helper.showToast(context, R.string.error);
+            }
+        });
+    }
+
     public static void display(Context context) {
-        context.startActivity(new Intent(context, LoginActivity.class));
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
     }
 }
