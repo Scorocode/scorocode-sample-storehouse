@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/filter_layout">
+
+    <CheckBox
+        android:id="@+id/cbPlatformFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/filter_platform"
+        style="@style/label_style" />
+
+    <EditText
+        android:id="@+id/etPlatformFilter"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:minWidth="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

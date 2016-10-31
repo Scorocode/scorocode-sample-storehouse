@@ -1,6 +1,5 @@
 package prof_itgroup.ru.storehouseapp.Helpers;
 
-import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -8,6 +7,8 @@ import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
 
 import java.util.Map;
+
+import prof_itgroup.ru.storehouseapp.Objects.ColorState;
 
 /**
  * Created by Peter Staranchuk on 10/27/16
@@ -34,19 +35,5 @@ public class ColorListHelper {
         etDeviceColors.setText(spannableStringBuilder);
     }
 
-    public enum ColorState {
-        NEW(android.R.color.holo_green_dark),
-        TO_REMOVE(android.R.color.holo_red_dark),
-        FROM_DB(android.R.color.black);
 
-        private int color;
-
-        ColorState(int color) {
-            this.color = color;
-        }
-
-        public int getColor(Context context) {
-            return context.getResources().getColor(color);
-        }
-    }
 }

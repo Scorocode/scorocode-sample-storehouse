@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/price_filter_layout" />
+
+    <include layout="@layout/dilimeter" />
+
+    <include layout="@layout/platform_filter" />
+
+    <include layout="@layout/dilimeter" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/colorsFilter"
+            style="@style/label_style"/>
+
+        <EditText
+            android:id="@+id/etColors"
+            android:hint="Введите необходимые цвета через зяпятую"
+            style="@style/label_style" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

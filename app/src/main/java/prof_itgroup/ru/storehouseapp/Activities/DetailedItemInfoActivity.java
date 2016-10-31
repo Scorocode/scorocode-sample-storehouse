@@ -14,9 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,22 +23,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import prof_itgroup.ru.storehouseapp.Helpers.ColorListHelper;
+import prof_itgroup.ru.storehouseapp.Helpers.DocumentHelper;
 import prof_itgroup.ru.storehouseapp.Helpers.Helper;
+import prof_itgroup.ru.storehouseapp.Objects.ColorState;
 import prof_itgroup.ru.storehouseapp.Objects.DocumentFields;
 import prof_itgroup.ru.storehouseapp.R;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackDocumentSaved;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackGetDocumentById;
-import ru.profit_group.scorocode_sdk.Callbacks.CallbackRemoveDocument;
-import ru.profit_group.scorocode_sdk.Responses.data.ResponseRemove;
 import ru.profit_group.scorocode_sdk.scorocode_objects.Document;
 import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
 
-import static prof_itgroup.ru.storehouseapp.Helpers.Helper.getArrayAsStringFrom;
-import static prof_itgroup.ru.storehouseapp.Helpers.Helper.getColorsListFrom;
 import static prof_itgroup.ru.storehouseapp.Helpers.Helper.getStringFrom;
 
 public class DetailedItemInfoActivity extends AppCompatActivity {
     private static final String EXTRA_ITEM_ID = "prof_itgroup.ru.storehouseapp.extraItemInfo";
+
     @BindView(R.id.etDeviceName) EditText etDeviceName;
     @BindView(R.id.etDevicePlatform) EditText etDevicePlatform;
     @BindView(R.id.etDeviceCameraInfo) EditText etDeviceCameraInfo;
@@ -48,15 +45,17 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
     @BindView(R.id.etDevicePrice) EditText etDevicePrice;
     @BindView(R.id.tvWaitingUsers) TextView tvWaitingUsers;
     @BindView(R.id.tvLastChange) TextView tvLastChange;
+    @BindView(R.id.tvLastChangeLabel) TextView tvLastChangeLabel;
     @BindView(R.id.btnAddItem) Button btnChangeItem;
     @BindView(R.id.btnClear) Button btnClear;
     @BindView(R.id.llChangeColorList) LinearLayout llChangeColorList;
     @BindView(R.id.llChangePrice) LinearLayout llChangePrice;
     @BindView(R.id.llWaitingUsers) LinearLayout llWaitingUsers;
     private double increaseCount;
-    private Map<String, ColorListHelper.ColorState> deviceColors;
+    private Map<String, ColorState> deviceColors;
 
     private Document document;
+    private DocumentFields fields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +80,8 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnAddColor)
     public void onAddColorButtonClicked() {
-
-        if(isExistInDeviceColors(ColorListHelper.ColorState.TO_REMOVE)) {
-            Toast.makeText(this, getString(R.string.error_delete_and_add), Toast.LENGTH_LONG).show();
+        if(isExistInDeviceColors(ColorState.TO_REMOVE)) {
+            showToast(R.string.error_delete_and_add);
             return;
         }
 
@@ -91,15 +89,10 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
             @Override
             public void onContinueClicked(String editTextContent) {
                 if (!editTextContent.isEmpty()) {
-
-                    if(getDBDeviceColourList().contains(editTextContent)) {
-                        deviceColors.put(editTextContent, ColorListHelper.ColorState.FROM_DB);
-                    } else {
-                        deviceColors.put(editTextContent, ColorListHelper.ColorState.NEW);
-                    }
+                    deviceColors.put(editTextContent, fields.getColorsAsList().contains(editTextContent)? ColorState.FROM_DB : ColorState.NEW);
                     ColorListHelper.refreshColorsList(etDeviceColors, deviceColors);
                 } else {
-                    Toast.makeText(DetailedItemInfoActivity.this, getString(R.string.wrong_data), Toast.LENGTH_SHORT).show();
+                    showToast(R.string.wrong_data);
                 }
             }
         });
@@ -107,8 +100,8 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnRemoveColor)
     public void onRemoveColorButtonClicked() {
-        if(isExistInDeviceColors(ColorListHelper.ColorState.NEW)) {
-            Toast.makeText(this, getString(R.string.error_delete_and_add), Toast.LENGTH_LONG).show();
+        if(isExistInDeviceColors(ColorState.NEW)) {
+            showToast(R.string.error_delete_and_add);
             return;
         }
 
@@ -116,16 +109,16 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
             @Override
             public void onContinueClicked(String editTextContent) {
                 if (!editTextContent.isEmpty() && deviceColors.keySet().contains(editTextContent)) {
-                    deviceColors.put(editTextContent, ColorListHelper.ColorState.TO_REMOVE);
+                    deviceColors.put(editTextContent, ColorState.TO_REMOVE);
                     ColorListHelper.refreshColorsList(etDeviceColors, deviceColors);
                 } else {
-                    Toast.makeText(DetailedItemInfoActivity.this, getString(R.string.wrong_data), Toast.LENGTH_SHORT).show();
+                    showToast(R.string.wrong_data);
                 }
             }
         });
     }
 
-    private boolean isExistInDeviceColors(ColorListHelper.ColorState colorState) {
+    private boolean isExistInDeviceColors(ColorState colorState) {
         for(String color : deviceColors.keySet()) {
             if(colorState.equals(deviceColors.get(color))) {
                 return true;
@@ -141,9 +134,8 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
     }
 
     private void showChangeDialog(final boolean isValueIncrease) {
-        int titleRes = isValueIncrease? R.string.title_increse_count : R.string.title_decrese_count;
-
-            Helper.showEditTextDialog(this, titleRes, InputType.TYPE_CLASS_NUMBER, new Helper.CallbackEditTextDialog() {
+            Helper.showEditTextDialog(this, isValueIncrease? R.string.title_increse_count : R.string.title_decrese_count,
+                    InputType.TYPE_CLASS_NUMBER, new Helper.CallbackEditTextDialog() {
                 @Override
                 public void onContinueClicked(String editTextContent) {
                     try {
@@ -156,73 +148,58 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
                         increaseCount = 0;
                     }
 
-                    setDevicePrice(getDevicePrice());
+                    etDevicePrice.setText(String.valueOf(fields.getDevicePrice() + increaseCount));
                 }
             });
     }
 
     @OnClick(R.id.btnSendToUser)
     public void onSendToUserButtonClicked() {
-        final Context context = DetailedItemInfoActivity.this;
-
         document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
             @Override
-            public void onDocumentFound(DocumentInfo documentInfo) {
-                document.updateDocument().popFirst(DocumentFields.BUYERS.getFieldName(context));
-                document.updateDocument().setCurrentDate(DocumentFields.LAST_SEND.getFieldName(context));
+            public void onDocumentFound(final DocumentInfo documentInfo) {
+                document.updateDocument()
+                        .popFirst(fields.getBuyersField())
+                        .setCurrentDate(fields.getLastSendField());
+
                 document.saveDocument(new CallbackDocumentSaved() {
                     @Override
                     public void onDocumentSaved() {
-                        refreshWaitingList();
                         document.updateDocument().getUpdateInfo().clear();
+                        refreshWaitingList();
                     }
 
                     @Override
                     public void onDocumentSaveFailed(String errorCode, String errorMessage) {
-                        Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show();
+                        showToast(R.string.error);
                     }
                 });
             }
 
             @Override
             public void onDocumentNotFound(String errorCode, String errorMessage) {
-                Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show();
+                showToast(R.string.error);
             }
         });
     }
 
-
-
-    private double getDevicePrice() {
-        Double devicePrice;
-        if(getStringFrom(etDevicePrice).isEmpty()) {
-            devicePrice = 0d;
-        } else {
-            devicePrice = Double.valueOf(getStringFrom(etDevicePrice));
-        }
-        devicePrice += increaseCount;
-        return devicePrice;
-    }
-
-    private void setDevicePrice(Double price) {
-        etDevicePrice.setText(String.valueOf(price));
-    }
-
     private void setFields() {
+        fields = new DocumentFields(this, getDocumentInfo());
+
         document = new Document(MainActivity.COLLECTION_NAME);
         deviceColors = new HashMap<>();
         llWaitingUsers.setVisibility(View.GONE);
 
         deviceColors.clear();
-        for(String color : getDBDeviceColourList()) {
-            deviceColors.put(color, ColorListHelper.ColorState.FROM_DB);
+        for(String color : fields.getColorsAsList()) {
+            deviceColors.put(color, ColorState.FROM_DB);
         }
 
-        etDeviceName.setText(Helper.getFieldValue(this, getDocumentInfo(), DocumentFields.DEVICE_NAME));
-        etDevicePlatform.setText(Helper.getFieldValue(this, getDocumentInfo(),DocumentFields.PLATFORM));
-        etDeviceCameraInfo.setText(Helper.getFieldValue(this, getDocumentInfo(),DocumentFields.CAMERA_INFO));
-        etDevicePrice.setText(Helper.getFieldValue(this, getDocumentInfo(),DocumentFields.DEVICE_PRICE));
-        etDeviceColors.setText(Helper.getArrayAsStringFrom(DetailedItemInfoActivity.this, getDocumentInfo(), DocumentFields.COLORS_AVAILABLE));
+        etDeviceName.setText(fields.getDeviceName());
+        etDevicePlatform.setText(fields.getPlatform());
+        etDeviceCameraInfo.setText(fields.getCameraInfo());
+        etDevicePrice.setText(String.valueOf(fields.getDevicePrice()));
+        etDeviceColors.setText(fields.getColors());
         etDeviceColors.setEnabled(false);
         etDeviceColors.setFocusable(false);
 
@@ -233,20 +210,13 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
         document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
             @Override
             public void onDocumentFound(DocumentInfo documentInfo) {
-                if(Helper.getArrayAsStringFrom(DetailedItemInfoActivity.this, documentInfo, DocumentFields.BUYERS).isEmpty()) {
-                    llWaitingUsers.setVisibility(View.GONE);
-                } else {
-                    llWaitingUsers.setVisibility(View.VISIBLE);
-                }
+                fields.setDocumentInfo(documentInfo);
+                tvWaitingUsers.setText(fields.getBuyers());
+                tvLastChange.setText(fields.getLastSendTime());
 
-                tvWaitingUsers.setText(Helper.getArrayAsStringFrom(DetailedItemInfoActivity.this, documentInfo, DocumentFields.BUYERS));
-
-                String newDate = getArrayAsStringFrom(getBaseContext(), documentInfo, DocumentFields.LAST_SEND);
-                if(newDate != null && !newDate.isEmpty() && !newDate.equals("null")) {
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");
-                    String date = formatter.format(Date.parse(newDate));
-                    tvLastChange.setText(date);
-                }
+                llWaitingUsers.setVisibility(fields.getBuyers().isEmpty() ? View.GONE : View.VISIBLE);
+                tvLastChangeLabel.setVisibility(fields.getLastSendTime().isEmpty() ? View.GONE : View.VISIBLE);
+                tvLastChange.setVisibility(fields.getLastSendTime().isEmpty() ? View.GONE : View.VISIBLE);
             }
 
             @Override
@@ -254,10 +224,6 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
                 tvWaitingUsers.setVisibility(View.GONE);
             }
         });
-    }
-
-    private List<String> getDBDeviceColourList() {
-        return getColorsListFrom(Helper.getArrayAsStringFrom(this, getDocumentInfo(), DocumentFields.COLORS_AVAILABLE));
     }
 
     private void setEditMode(boolean isEditModeEnabled) {
@@ -288,60 +254,59 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
     }
 
     private void updateItemDocument() {
-        final Context context = DetailedItemInfoActivity.this;
+        document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
+            @Override
+            public void onDocumentFound(DocumentInfo documentInfo) {
 
-        if(document != null) {
-            document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
-                @Override
-                public void onDocumentFound(DocumentInfo documentInfo) {
+                document.updateDocument()
+                        .set(fields.getDeviceNameField(), getStringFrom(etDeviceName))
+                        .set(fields.getPlatformField(), getStringFrom(etDevicePlatform))
+                        .set(fields.getCameraInfoField(), getStringFrom(etDeviceCameraInfo));
 
-                    document.updateDocument()
-                            .set(DocumentFields.DEVICE_NAME.getFieldName(context), getStringFrom(etDeviceName))
-                            .set(DocumentFields.PLATFORM.getFieldName(context), getStringFrom(etDevicePlatform))
-                            .set(DocumentFields.CAMERA_INFO.getFieldName(context), getStringFrom(etDeviceCameraInfo));
+                setColorsUpdateInfo();
 
-                    for(String color : deviceColors.keySet()) {
-                        ColorListHelper.ColorState colorState = deviceColors.get(color);
+                document.updateDocument().inc(fields.getDevicePriceField(), increaseCount);
+                document.saveDocument(new CallbackDocumentSaved() {
+                    @Override
+                    public void onDocumentSaved() {
+                        setEditMode(false);
 
-                        switch (colorState) {
-                            case TO_REMOVE:
-                                document.updateDocument().pull(DocumentFields.COLORS_AVAILABLE.getFieldName(context), color);
-                                break;
-
-                            case NEW:
-                                document.updateDocument().push(DocumentFields.COLORS_AVAILABLE.getFieldName(context), color);
-                                break;
+                        for (String color : deviceColors.keySet()) {
+                            deviceColors.put(color, ColorState.FROM_DB);
                         }
+
+                        document.updateDocument().getUpdateInfo().clear();
                     }
 
-                    document.updateDocument().inc(DocumentFields.DEVICE_PRICE.getFieldName(context), increaseCount);
+                    @Override
+                    public void onDocumentSaveFailed(String errorCode, String errorMessage) {
+                        showToast(R.string.error_update_item);
+                        setFields();
+                    }
+                });
+            }
 
-                    document.saveDocument(new CallbackDocumentSaved() {
-                        @Override
-                        public void onDocumentSaved() {
-                            setEditMode(false);
+            @Override
+            public void onDocumentNotFound(String errorCode, String errorMessage) {
+                showToast(R.string.error_update_item);
+                setFields();
+            }
+        });
+    }
 
-                            for(String color : deviceColors.keySet()) {
-                                deviceColors.put(color, ColorListHelper.ColorState.FROM_DB);
-                            }
+    private void setColorsUpdateInfo() {
+        for (String color : deviceColors.keySet()) {
+            ColorState colorState = deviceColors.get(color);
 
-                            document.updateDocument().getUpdateInfo().clear();
-                        }
+            switch (colorState) {
+                case TO_REMOVE:
+                    document.updateDocument().pull(fields.getColorsAvailableField(), color);
+                    break;
 
-                        @Override
-                        public void onDocumentSaveFailed(String errorCode, String errorMessage) {
-                            Toast.makeText(context, getString(R.string.error_update_item), Toast.LENGTH_SHORT).show();
-                            setFields();
-                        }
-                    });
-                }
-
-                @Override
-                public void onDocumentNotFound(String errorCode, String errorMessage) {
-                    Toast.makeText(context, getString(R.string.error_update_item), Toast.LENGTH_SHORT).show();
-                    setFields();
-                }
-            });
+                case NEW:
+                    document.updateDocument().push(fields.getColorsAvailableField(), color);
+                    break;
+            }
         }
     }
 
@@ -359,7 +324,7 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_remove_item:
-                fetchAndRemoveDocument();
+                DocumentHelper.fetchAndRemoveDocument(this, document, getDocumentInfo());
                 break;
 
             case R.id.action_prepare_item:
@@ -374,60 +339,35 @@ public class DetailedItemInfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addBuyerAndRefreshWaitingList(final String editTextContent) {
+    private void addBuyerAndRefreshWaitingList(final String buyerName) {
         document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
             @Override
             public void onDocumentFound(DocumentInfo documentInfo) {
-                document.updateDocument().push(DocumentFields.BUYERS.getFieldName(getBaseContext()), editTextContent);
+                document.updateDocument().push(fields.getBuyersField(), buyerName);
                 document.saveDocument(new CallbackDocumentSaved() {
                     @Override
                     public void onDocumentSaved() {
-                        Toast.makeText(DetailedItemInfoActivity.this, getString(R.string.item_ready_to_sell), Toast.LENGTH_SHORT).show();
-                        refreshWaitingList();
                         document.updateDocument().getUpdateInfo().clear();
+                        refreshWaitingList();
+                        showToast(R.string.item_ready_to_sell);
                     }
 
                     @Override
                     public void onDocumentSaveFailed(String errorCode, String errorMessage) {
-                        Toast.makeText(DetailedItemInfoActivity.this, getString(R.string.error), Toast.LENGTH_SHORT).show();
+                        showToast(R.string.error);
                     }
                 });
             }
 
             @Override
             public void onDocumentNotFound(String errorCode, String errorMessage) {
-                Toast.makeText(DetailedItemInfoActivity.this, getString(R.string.error), Toast.LENGTH_SHORT).show();
+                showToast(R.string.error);
             }
         });
     }
 
-    private void fetchAndRemoveDocument() {
-        document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
-            @Override
-            public void onDocumentFound(DocumentInfo documentInfo) {
-                removeDocument();
-            }
-
-            @Override
-            public void onDocumentNotFound(String errorCode, String errorMessage) {
-                Toast.makeText(DetailedItemInfoActivity.this, getString(R.string.error_document_not_removed), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void removeDocument() {
-        document.removeDocument(new CallbackRemoveDocument() {
-            @Override
-            public void onRemoveSucceed(ResponseRemove responseRemove) {
-                Toast.makeText(DetailedItemInfoActivity.this, getString(R.string.document_removed), Toast.LENGTH_SHORT).show();
-                finish();
-            }
-
-            @Override
-            public void onRemoveFailed(String errorCode, String errorMessage) {
-                Toast.makeText(DetailedItemInfoActivity.this, getString(R.string.error_document_not_removed), Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void showToast(int textRes) {
+        Toast.makeText(DetailedItemInfoActivity.this, getString(textRes), Toast.LENGTH_SHORT).show();
     }
 
     private DocumentInfo getDocumentInfo() {

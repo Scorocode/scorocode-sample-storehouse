@@ -30,6 +30,7 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etDeviceColors) EditText etDeviceColors;
     @BindView(R.id.etDevicePrice) EditText etDevicePrice;
     private List<EditText> editTextViews;
+    private DocumentFields fields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class AddItemActivity extends AppCompatActivity {
         editTextViews.add(etDeviceCameraInfo);
         editTextViews.add(etDeviceColors);
         editTextViews.add(etDevicePrice);
+
+        fields = new DocumentFields(this);
     }
 
     @OnClick(R.id.btnAddItem)
@@ -53,11 +56,11 @@ public class AddItemActivity extends AppCompatActivity {
         Document document = new Document(MainActivity.COLLECTION_NAME);
 
         if (isAllFieldsFilled()) {
-            document.setField(DocumentFields.DEVICE_NAME.getFieldName(this), getStringFrom(etDeviceName).trim());
-            document.setField(DocumentFields.PLATFORM.getFieldName(this), getStringFrom(etDevicePlatform).trim());
-            document.setField(DocumentFields.CAMERA_INFO.getFieldName(this), getStringFrom(etDeviceCameraInfo).trim());
-            document.setField(DocumentFields.COLORS_AVAILABLE.getFieldName(this), getColorsListFrom(getStringFrom(etDeviceColors)));
-            document.setField(DocumentFields.DEVICE_PRICE.getFieldName(this), Double.valueOf(getStringFrom(etDevicePrice)));
+            document.setField(fields.getDeviceNameField(), getStringFrom(etDeviceName).trim());
+            document.setField(fields.getPlatformField(), getStringFrom(etDevicePlatform).trim());
+            document.setField(fields.getCameraInfoField(), getStringFrom(etDeviceCameraInfo).trim());
+            document.setField(fields.getColorsAvailableField(), getColorsListFrom(getStringFrom(etDeviceColors)));
+            document.setField(fields.getDevicePriceField(), Double.valueOf(getStringFrom(etDevicePrice)));
 
             document.saveDocument(new CallbackDocumentSaved() {
                 @Override

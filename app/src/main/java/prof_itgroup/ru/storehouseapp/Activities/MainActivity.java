@@ -13,6 +13,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import prof_itgroup.ru.storehouseapp.Objects.DocumentFields;
+import prof_itgroup.ru.storehouseapp.Objects.FilterDialog;
 import prof_itgroup.ru.storehouseapp.Objects.StoredItemsAdapter;
 import prof_itgroup.ru.storehouseapp.R;
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackFindDocument;
@@ -23,12 +25,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String COLLECTION_NAME = "storehouse";
     @BindView(R.id.lvItemsInStorehouse) ListView lvItemsInStorehouse;
+    private DocumentFields fields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        fields = new DocumentFields(this);
     }
 
     @Override
@@ -40,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDocumentFound(List<DocumentInfo> documentInfos) {
                 if(documentInfos != null) {
-                    StoredItemsAdapter adapter = new StoredItemsAdapter(MainActivity.this, documentInfos, R.layout.stored_items_item);
-                    lvItemsInStorehouse.setAdapter(adapter);
+                    setAdapter(documentInfos);
                 }
             }
 
@@ -50,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.error_get_docs), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setAdapter(List<DocumentInfo> documentInfos) {
+        StoredItemsAdapter adapter = new StoredItemsAdapter(MainActivity.this, documentInfos, R.layout.stored_items_item);
+        lvItemsInStorehouse.setAdapter(adapter);
     }
 
     @Override
@@ -66,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
                 AddItemActivity.display(this);
                 break;
 
+            case R.id.action_set_filter:
+                new FilterDialog(this).showFilterDialog(new FilterDialog.CallbackFilterDialog() {
+                    @Override
+                    public void onFilterApplied(List<DocumentInfo> documentInfo) {
+                        setAdapter(documentInfo);
+                    }
+                });
+                break;
 
         }
         return super.onOptionsItemSelected(item);

@@ -74,4 +74,11 @@
     <string name="lastChange">Последнее изменение:\n</string>
     <string name="last_change">Последняя отгрузка в:</string>
     <string name="storedItemPrice">Цена:</string>
+    <string name="filter_price_from">Цена от</string>
+    <string name="filter_price_up_to">до</string>
+    <string name="filter_platform">Платформа</string>
+    <string name="titleChooseFilterProperties">Выберите настройки фильтра</string>
+    <string name="include_lower">Включая\nнижнюю\nграницу</string>
+    <string name="include_upper">Включая\nверхнюю\nграницу</string>
+    <string name="colorsFilter">Цвета:</string>
 </resources>

@@ -25,12 +25,14 @@ public class StoredItemsAdapter extends BaseAdapter {
     private List<DocumentInfo> storedItems;
     private int layoutId;
     private LayoutInflater inflater;
+    private DocumentFields fields;
 
     public StoredItemsAdapter(Context context, @NonNull List<DocumentInfo> storedItems, int layoutId) {
         this.context = context;
         this.storedItems = storedItems;
         this.layoutId = layoutId;
         inflater = LayoutInflater.from(context);
+        fields = new DocumentFields(context, null);
     }
 
     @Override
@@ -66,9 +68,9 @@ public class StoredItemsAdapter extends BaseAdapter {
     }
 
     private void customizeView(View view, ViewHolder holder, final DocumentInfo documentInfo) {
-        String deviceName = (String) documentInfo.getFields().get(DocumentFields.DEVICE_NAME.getFieldName(context));
-        String devicePlatform = (String) documentInfo.getFields().get(DocumentFields.PLATFORM.getFieldName(context));
-        Double devicePrice = (Double) documentInfo.getFields().get(DocumentFields.DEVICE_PRICE.getFieldName(context));
+        String deviceName = (String) documentInfo.getFields().get(fields.getDeviceNameField());
+        String devicePlatform = (String) documentInfo.getFields().get(fields.getPlatformField());
+        Double devicePrice = (Double) documentInfo.getFields().get(fields.getDevicePriceField());
 
         holder.tvStoredItemName.setText(deviceName);
         holder.tvStoredItemStatus.setText(devicePlatform);

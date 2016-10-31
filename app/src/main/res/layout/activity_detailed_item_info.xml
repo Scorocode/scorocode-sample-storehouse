@@ -34,6 +34,7 @@
                     style="@style/label_style"/>
 
                 <TextView
+                    android:id="@+id/tvLastChangeLabel"
                     android:layout_marginTop="8dp"
                     style="@style/label_style"
                     android:text="@string/last_change"/>

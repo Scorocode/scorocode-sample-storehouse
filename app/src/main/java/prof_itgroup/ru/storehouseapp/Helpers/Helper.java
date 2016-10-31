@@ -5,13 +5,12 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import prof_itgroup.ru.storehouseapp.Objects.DocumentFields;
 import prof_itgroup.ru.storehouseapp.R;
-import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
 
 
 /**
@@ -61,18 +60,8 @@ public class Helper {
                 .show();
     }
 
-    public static String getFieldValue(Context context, DocumentInfo documentInfo, DocumentFields field) {
-        return String.valueOf(documentInfo.getFields().get(field.getFieldName(context)));
-    }
-
-    public static String getArrayAsStringFrom(Context context, DocumentInfo documentInfo, DocumentFields documentFields) {
-        if(getFieldValue(context, documentInfo, documentFields) == null || getFieldValue(context, documentInfo, documentFields).equals("null")) {
-            return "";
-        }
-
-        return getFieldValue(context, documentInfo, documentFields)
-                .replace("[","")
-                .replace("]","");
+    public static void showToast(Context context, int textRes) {
+        Toast.makeText(context, context.getString(textRes), Toast.LENGTH_SHORT).show();
     }
 
     public interface CallbackEditTextDialog{
