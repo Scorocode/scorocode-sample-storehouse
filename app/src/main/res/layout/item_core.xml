@@ -14,7 +14,6 @@
 
     <TextView
         style="@style/label_style"
-        android:layout_marginTop="8dp"
         android:text="@string/add_item_device_platform" />
 
     <EditText
@@ -24,7 +23,6 @@
 
     <TextView
         style="@style/label_style"
-        android:layout_marginTop="8dp"
         android:text="@string/add_item_camera_info" />
 
     <EditText
@@ -34,7 +32,6 @@
 
     <TextView
         style="@style/label_style"
-        android:layout_marginTop="8dp"
         android:text="@string/add_item_available_colors_info" />
 
     <EditText
@@ -70,7 +67,6 @@
 
     <TextView
         style="@style/label_style"
-        android:layout_marginTop="8dp"
         android:text="@string/add_item_price" />
 
     <EditText
@@ -89,7 +85,7 @@
 
         <Button
             android:id="@+id/btnIncreaseCount"
-            android:padding="12dp"
+            android:padding="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/increase_item_count"
             android:layout_width="wrap_content"
@@ -97,7 +93,7 @@
 
         <Button
             android:id="@+id/btnDecreaseCount"
-            android:padding="12dp"
+            android:padding="8dp"
             android:layout_marginLeft="8dp"
             android:text="@string/decrease_item_count"
             android:layout_width="wrap_content"
@@ -116,7 +112,7 @@
 
         <Button
             android:id="@+id/btnAddItem"
-            android:padding="12dp"
+            android:padding="8dp"
             android:background="#64b5f6"
             android:textColor="@android:color/white"
             android:layout_width="match_parent"
@@ -127,7 +123,7 @@
 
         <Button
             android:id="@+id/btnClear"
-            android:padding="12dp"
+            android:padding="8dp"
             android:background="#64b5f6"
             android:textColor="@android:color/white"
             android:layout_width="match_parent"

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,12 +20,11 @@ import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo;
 import ru.profit_group.scorocode_sdk.scorocode_objects.User;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String APPLICATION_ID = "305ffd6cc32832f6819bf4e4f4707848";
-    public static final String CLIENT_KEY = "962066371eefc0d1850a76c7ab14c1dc";
-    public static final String FILE_KEY = "fc76ecfd482abf3f7aec8e0585f74134";
-    private static final String MASTER_KEY = "383499df2748bb4560745d5da67f5e41";
-    private static final String MESSAGE_KEY = "694bcf2ffd29369dab1c3d0e3f1776ae";
-    private static final String SCRIPT_KEY = "cae4935f64336edab96cd90e31443253";
+    public static final String APPLICATION_ID = "<enter your key>";
+    public static final String CLIENT_KEY = "<enter your key>";
+    public static final String FILE_KEY = "<enter your key>";
+    private static final String MESSAGE_KEY = "<enter your key>";
+    private static final String SCRIPT_KEY = "<enter your key>";
 
     @BindView(R.id.etEmail) EditText etEmail;
     @BindView(R.id.etPassword) EditText etPassword;
@@ -50,16 +48,20 @@ public class LoginActivity extends AppCompatActivity {
         user.login(etEmail.getText().toString(), etPassword.getText().toString(), new CallbackLoginUser() {
             @Override
             public void onLoginSucceed(ResponseLogin responseLogin) {
+                DocumentInfo userInfo = responseLogin.getResult().getUserInfo();
+                saveUserInfo(userInfo);
                 MainActivity.display(LoginActivity.this);
-                DocumentInfo userData = responseLogin.getResult().getUserInfo();
-                LocalPersistence.writeObjectToFile(LoginActivity.this, userData, LocalPersistence.FILE_USER_INFO);
             }
 
             @Override
             public void onLoginFailed(String errorCode, String errorMessage) {
-                Toast.makeText(LoginActivity.this, getResources().getString(R.string.error_login), Toast.LENGTH_SHORT).show();
+                Helper.showToast(getBaseContext(), R.string.error_login);
             }
         });
+    }
+
+    private void saveUserInfo(DocumentInfo userData) {
+        LocalPersistence.writeObjectToFile(LoginActivity.this, userData, LocalPersistence.FILE_USER_INFO);
     }
 
     @OnClick(R.id.btnRegister)

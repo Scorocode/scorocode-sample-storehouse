@@ -14,6 +14,10 @@ import ru.profit_group.scorocode_sdk.scorocode_objects.Script;
 public class BalanceNotificator {
     private Context context;
 
+    public BalanceNotificator(Context context) {
+        this.context = context;
+    }
+
     public void refreshCompanyBalance() {
         Script script = new Script();
         script.runScript("5800ad9342d52f1ba275fbcd", new CallbackSendScript() {

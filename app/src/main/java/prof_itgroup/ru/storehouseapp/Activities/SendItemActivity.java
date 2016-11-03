@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import prof_itgroup.ru.storehouseapp.Helpers.Helper;
+import prof_itgroup.ru.storehouseapp.Objects.BalanceNotificator;
 import prof_itgroup.ru.storehouseapp.Objects.DocumentFields;
 import prof_itgroup.ru.storehouseapp.Objects.FileHelper;
 import prof_itgroup.ru.storehouseapp.Objects.ItemNotificator;
@@ -61,8 +62,8 @@ public class SendItemActivity extends AppCompatActivity {
     public void onBtnAddUserInListClicked() {
         Helper.showEditTextDialog(this, R.id.title_enter_user_login, InputType.TYPE_CLASS_TEXT, new Helper.CallbackEditTextDialog() {
             @Override
-            public void onContinueClicked(final String buyerName) {
-                addBuyerAndRefreshWaitingList(buyerName);
+            public void onContinueClicked(final String buyerInfo) {
+                addBuyerAndRefreshWaitingList(buyerInfo);
             }
         });
     }
@@ -86,12 +87,12 @@ public class SendItemActivity extends AppCompatActivity {
         return new DocumentInfo();
     }
 
-    private void addBuyerAndRefreshWaitingList(final String buyerName) {
-        if(!buyerName.trim().isEmpty()) {
+    private void addBuyerAndRefreshWaitingList(final String buyerInfo) {
+        if(!buyerInfo.trim().isEmpty()) {
             document.getDocumentById(getDocumentInfo().getId(), new CallbackGetDocumentById() {
                 @Override
                 public void onDocumentFound(DocumentInfo documentInfo) {
-                    document.updateDocument().push(fields.getBuyersField(), buyerName);
+                    document.updateDocument().push(fields.getBuyersField(), buyerInfo);
                     document.saveDocument(new CallbackDocumentSaved() {
                         @Override
                         public void onDocumentSaved() {
@@ -152,7 +153,7 @@ public class SendItemActivity extends AppCompatActivity {
                     public void onDocumentSaved() {
                         document.updateDocument().getUpdateInfo().clear();
                         new ItemNotificator(getBaseContext(), documentInfo.getId(), fields.getDeviceName()).notifyPersonalAboutItemSend();
-
+                        new BalanceNotificator(getBaseContext()).refreshCompanyBalance();
                         etItemInfo.setVisibility(View.VISIBLE);
                         etItemInfo.append(fields.getLastSendTime());
                         refreshWaitingList();

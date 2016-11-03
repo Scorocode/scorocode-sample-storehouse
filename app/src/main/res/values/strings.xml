@@ -93,8 +93,14 @@
     <string name="color_filter_hint">Введите необходимые\nцвета через зяпятую</string>
     <string name="comment_for_loader">Комментарий для грузчика:</string>
     <string name="fieldSendInfo">sendInfo</string>
-    <string name="item_info">Информация о товаре:</string>
+    <string name="item_info">Комментарий к отгрузке:</string>
     <string name="editInfo">редактировать</string>
     <string name="saveInfo">сохранить</string>
-    <string name="no_info">По товару в настоящее время нет информации (отредактиуйте и измените информацию)</string>
+    <string name="no_info">По товару в настоящее время нет комментария (отредактиуйте и измените информацию)</string>
+    <string name="take_item">"Вы должны забрать со склада товар: "</string>
+    <string name="from">storehouse android app</string>
+    <string name="device">Устройство:</string>
+    <string name="sold">" было продано"</string>
+    <string name="you_should_take">"Вы должны забрать со склада товар "</string>
+    <string name="and_prepare">" и подготовить к отправке"</string>
 </resources>

@@ -22,7 +22,6 @@
             android:text="@string/login" />
 
         <EditText
-            android:text="ps@gmail.com"
             android:id="@+id/etEmail"
             android:gravity="center"
             style="@style/textStyle"
@@ -34,7 +33,6 @@
             android:text="@string/password"/>
 
         <EditText
-            android:text="qwerty"
             android:gravity="center"
             android:id="@+id/etPassword"
             style="@style/textStyle"

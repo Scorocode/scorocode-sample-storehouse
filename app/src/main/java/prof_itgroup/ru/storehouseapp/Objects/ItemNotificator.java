@@ -40,9 +40,10 @@ public class ItemNotificator {
     private void sendSmsToDeliveryPerson() {
         Query query = new Query("roles");
         query.equalTo("name", "deliveryPerson");
+        query.equalTo("isFree", true);
         query.setLimit(1);
 
-        MessageSms messageSms = new MessageSms("Вы должны забрать со склада товар: " + getItemInfo());
+        MessageSms messageSms = new MessageSms(context.getString(R.string.take_item) + getItemInfo());
         message.sendSms(messageSms, query, new CallbackSendSms() {
             @Override
             public void onSmsSended() {
@@ -60,9 +61,8 @@ public class ItemNotificator {
     private void sendEmailInAccountingDepartment() {
         Query query = new Query("roles");
         query.equalTo("name", "accountantPerson");
-        query.setLimit(1);
 
-        MessageEmail messageEmail = new MessageEmail("storehouse android app", "item:" + getItemInfo() ,"item " + getItemInfo() + "was send");
+        MessageEmail messageEmail = new MessageEmail(context.getString(R.string.from), context.getString(R.string.device) + getItemInfo() , context.getString(R.string.device) + getItemInfo() + context.getString(R.string.sold));
         message.sendEmail(messageEmail, query, new CallbackSendEmail() {
             @Override
             public void onEmailSend() {
@@ -79,9 +79,10 @@ public class ItemNotificator {
     private void sendPushToLoaderPerson() {
         Query query = new Query("roles");
         query.equalTo("name", "loaderPerson");
+        query.equalTo("isFree", true);
         query.setLimit(1);
 
-        MessagePush messagePush = new MessagePush("You should take item " + getItemInfo() + "and prepare for send", null);
+        MessagePush messagePush = new MessagePush(context.getString(R.string.you_should_take) + getItemInfo() + context.getString(R.string.and_prepare), null);
         message.sendPush(messagePush, query, new CallbackSendPush() {
             @Override
             public void onPushSended() {
